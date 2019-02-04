@@ -1,0 +1,50 @@
+/**
+ *
+ * @author Santiago Moreno Rave and Valaria Suárez Mejía
+ */
+public class Arc {
+
+    String exitNode;
+    String arrivalNode;
+    String distance;
+    String nodeArc;
+
+    public Arc(String id1, String id2, String distance, String name) {
+        this.exitNode = id1;
+        this.arrivalNode = id2;
+        this.distance = distance;
+        this.nodeArc = name;
+    }
+
+    public String getExitNode() {
+        return exitNode;
+    }
+
+    public void setExitNode(String exitNode) {
+        this.exitNode = exitNode;
+    }
+
+    public String getArrivalNode() {
+        return arrivalNode;
+    }
+
+    public void setArrivalNode(String arrivalNode) {
+        this.arrivalNode = arrivalNode;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getNodeArc() {
+        return nodeArc;
+    }
+
+    public void setNodeArc(String nodeArc) {
+        this.nodeArc = nodeArc;
+    }
+}
