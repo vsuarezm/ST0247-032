@@ -1,0 +1,51 @@
+/**
+ *
+ * @author Santiago Moreno Rave y Valaria Suárez Mejía
+ */
+public class Arco {
+
+    String nodoSalida;//nodo donde inicia el arco   
+    String nodollegada;//nodo donde finaliza el arco    
+    String distancia;//distancia entre nodos    
+    String nombreArco;// nombre o alias del arco
+
+    public Arco(String id1, String id2, String distancia, String nombre) {
+        this.nodoSalida = id1;
+        this.nodollegada = id2;
+        this.distancia = distancia;
+        this.nombreArco = nombre;
+    }
+
+    public String getNodoSalida() {
+        return nodoSalida;
+    }
+
+    public void setNodoSalida(String nodoSalida) {
+        this.nodoSalida = nodoSalida;
+    }
+
+    public String getNodollegada() {
+        return nodollegada;
+    }
+
+    public void setNodollegada(String nodollegada) {
+        this.nodollegada = nodollegada;
+    }
+
+    public String getDistancia() {
+        return distancia;
+    }
+
+    public void setDistancia(String distancia) {
+        this.distancia = distancia;
+    }
+
+    public String getNombreArco() {
+        return nombreArco;
+    }
+
+    public void setNombreArco(String nombreArco) {
+        this.nombreArco = nombreArco;
+    }
+
+}
