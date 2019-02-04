@@ -1,0 +1,60 @@
+/**
+ *
+ * @author Santiago Moreno Rave y Valeria Suárez Mejía
+ */
+public class Vertice {
+
+    String id;
+    String x; // coordenada en el eje x
+    String y; // coordenada en el eje y
+    String nombreNodo; // nombre del vértice
+
+    public Vertice(String id, String x, String y, String nombre) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.nombreNodo = nombre;
+    }
+
+    //constructor para cuando el nodo no tenga nombre
+
+    public Vertice(String id, String x, String y) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.nombreNodo = "desconocido";
+    }
+
+    public String getID() {
+        return id;
+    }
+
+    public void setID(String id) {
+        this.id = id;
+    }
+
+    public String getX() {
+        return x;
+    }
+
+    public void setX(String x) {
+        this.x = x;
+    }
+
+    public String getY() {
+        return y;
+    }
+
+    public void setY(String y) {
+        this.y = y;
+    }
+
+    public String getNombre() {
+        return nombreNodo;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombreNodo = nombre;
+    }
+
+}
