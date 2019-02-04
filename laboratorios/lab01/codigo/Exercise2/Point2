@@ -1,0 +1,72 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+/**
+ *
+ * @author Santiago Moreno Rave - Valeria Suárez Mejía
+ */
+public class Point2 {
+
+    public static boolean bicolorable(int[][] matrix) {
+        int[] color = new int[matrix.length];
+
+        for (int i = 0; i < matrix.length; i++) {
+            color[i] = -1;
+        }
+
+        if (auxBicolorable(matrix, color)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean auxBicolorable(int[][] matrix, int[] color) {
+        Stack<Integer> round = new Stack<>();
+        round.push(0);
+        while (round.size() != 0) {
+            System.out.println("Stack: " + round);
+            int actual = round.pop();
+            System.out.println("Stack pop: " + actual);
+
+            for (int i = 0; i < matrix.length; i++) {
+                if (matrix[actual][i] == 1 && color[i] == -1) {
+                    System.out.println("Meets contition");
+                    System.out.println("Actual color: " + color[actual]);
+                    System.out.println("Color in position i " + color[i]);
+                    color[i] = 1 - color[actual];
+                    System.out.println("Color after: " + color[i]);
+                    System.out.println("Stack: " + round);
+                    System.out.println("Value entered in the stack: " + round.push(i));
+                } else if (matrix[actual][i] == 1 && color[actual] == color[i]) {
+                    System.out.println("It does not meets the condition");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+        System.out.println("Enter the number of nodes: ");
+        int nodes = console.nextInt();
+        System.out.println("Enter the number of arcs: ");
+        int arcs = console.nextInt();
+        int[][] matrix = new int[nodes][nodes];
+        for (int i = 0; i < nodes; i++) {
+            System.out.println("Enter the origin coordinate: ");
+            int origin = console.nextInt();
+            System.out.println("Enter the destiny coordinate: ");
+            int destiny = console.nextInt();
+            matrix[origin][destiny] = 1;
+        }
+        String answers;
+        if (bicolorable(matrix)) {
+            System.out.println(answers = "BICOLORABLE");
+        } else {
+            System.out.println(answers = "NOT BICOLORABLE");
+        }
+
+    }
+}
