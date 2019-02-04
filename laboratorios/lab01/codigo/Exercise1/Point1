@@ -1,0 +1,92 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import javafx.util.Pair;
+
+/**
+ *
+ * @author Santiago Moreno Rave and Valeria Suárez Mejía
+ */
+
+public class Point1 {
+
+    public static void makeMap() throws IOException {
+        HashMap<String, Pair<Vertex, LinkedList<Arc>>> vertices = new HashMap<String, Pair<Vertex, LinkedList<Arc>>>();
+        boolean typeVertex = true;
+        String nameArchive = "..\\medellin_colombia-grande.txt";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(nameArchive));
+            String currentLine = br.readLine();
+            currentLine = br.readLine();
+            while (currentLine != null) {
+
+                if (currentLine.isEmpty()) {
+                    currentLine = br.readLine();
+                }
+                if (currentLine.contains("Arcos")) {
+                    typeVertex = false;
+                }
+
+                if (typeVertex) {
+                    String[] partitionedChain = currentLine.split(" ");
+                    if (partitionedChain.length > 3) {
+                        String aux = partitionedChain[3];
+                        for (int i = 4; i < partitionedChain.length; i++) {
+                            aux += " " + partitionedChain[i];
+                        }
+                        Vertex vertex = new Vertex(partitionedChain[0], partitionedChain[1], partitionedChain[2], aux);
+                        LinkedList<Arc> list = new LinkedList();
+                        Pair<Vertex, LinkedList<Arc>> pair = new Pair(vertex, list);
+                        vertices.put(partitionedChain[0], pair);
+                    } else {
+                        Vertex vertice = new Vertex(partitionedChain[0], partitionedChain[1], partitionedChain[2]);
+                        LinkedList<Arc> list = new LinkedList();
+                        Pair<Vertex, LinkedList<Arc>> pareja = new Pair(vertice, list);
+                        vertices.put(partitionedChain[0], pareja);
+                    }
+                } else {
+                    String[] cadenaParticionada = currentLine.split(" ");
+                    if (cadenaParticionada.length > 3) {
+                        String aux = cadenaParticionada[3];
+                        for (int i = 4; i < cadenaParticionada.length; i++) {
+                            aux += " " + cadenaParticionada[i];
+                        }
+                        Arc arc = new Arc(cadenaParticionada[0], cadenaParticionada[1], cadenaParticionada[2], aux);
+                        if (vertices.get(cadenaParticionada[0]) != null) {
+                            vertices.get(cadenaParticionada[0]).getValue().add(arc);
+                        }
+                    } else {
+                        Arc arc = new Arc(cadenaParticionada[0], cadenaParticionada[1], cadenaParticionada[2], "unknown");
+                        if (vertices.get(cadenaParticionada[0]) != null) {
+                            vertices.get(cadenaParticionada[0]).getValue().add(arc);
+                        }
+                    }
+                }
+
+                currentLine = br.readLine();
+
+            }
+        } catch (IOException ioe) {
+            System.out.println("Error reading the input file");
+        }
+
+        /*
+         with this sout we verify that in the key (that is the value of the id of the vertice the data of the
+         vertice as its name in this case.
+         System.out.println(vertices.get("1374376156").getKey().nombre);
+        
+         -----------------------------------o------------------------------------------
+         with this sout we verify that in the hashmap value the arcs of each node are stored in a list, 
+         in this example we can see the arc of the pos 0 of the list and its corresponding distance.
+         System.out.println(vertices.get("1374376156").getValue().get(0).distancia);
+
+         */
+    }
+
+    public static void main(String[] args) throws IOException {
+        makeMap();
+
+    }
+}
