@@ -1,0 +1,58 @@
+/**
+ *
+ * @author Santiago Moreno Rave and Valeria Suárez Mejía
+ */
+public class Vertex {
+
+    String id;
+    String x;
+    String y;
+    String nodeName;
+
+    public Vertex(String id, String x, String y, String name) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.nodeName = name;
+    }
+
+    public Vertex(String id, String x, String y) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.nodeName = "unknown";
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getX() {
+        return x;
+    }
+
+    public void setX(String x) {
+        this.x = x;
+    }
+
+    public String getY() {
+        return y;
+    }
+
+    public void setY(String y) {
+        this.y = y;
+    }
+
+    public String getNodeName() {
+        return nodeName;
+    }
+
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
+    }
+
+}
