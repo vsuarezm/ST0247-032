@@ -1,0 +1,72 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+/**
+ *
+ * @author Santiago Moreno Rave - Valeria Suárez Mejía
+ */
+public class Punto2 {
+
+    public static boolean bicolor(int[][] matriz) {
+        int[] color = new int[matriz.length];
+        for (int i = 0;i < matriz.length;i++) {
+            color[i] = -1;
+        }
+
+        if (auxBicolor(matriz, color)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean auxBicolor(int[][] grafico, int[] color) {
+        Stack<Integer> vuelta = new Stack<>();
+        vuelta.push(0);
+        while (vuelta.size() != 0) {
+            System.out.println("Pila: " + vuelta);
+            int actual = vuelta.pop();
+            System.out.println("Pop de la pila: " + actual);
+
+            for (int i = 0; i < grafico.length; i++) {
+                if (grafico[actual][i] == 1 && color[i] == -1) {
+                    System.out.println("CUMPLE CONDICIÓN");
+                    System.out.println("Color actual: " + color[actual]);
+                    System.out.println("Color en la posición i " + color[i]);
+                    color[i] = 1 - color[actual];
+                    System.out.println("Color después de la operación: " + color[i]);
+                    System.out.println("Pila: " + vuelta);
+                    System.out.println("Valor ingresado en la pila: " + vuelta.push(i));
+                    //round.push(i);
+                } else if (grafico[actual][i] == 1 && color[actual] == color[i]) {
+                    System.out.println("NO CUMPLE CONDICIÓN");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner consola = new Scanner(System.in);
+        System.out.println("Ingrese la cantidad de nodos: ");
+        int nodos = consola.nextInt();
+        System.out.println("Ingrese el número de arcos: ");
+        int arcos = consola.nextInt();
+        int[][] matriz = new int[nodos][nodos];
+        for (int i = 0; i < arcos; i++) {
+            System.out.println("Ingrese la coordenada de origen: ");
+            int origen = consola.nextInt();
+            System.out.println("Ingrese la coordenada de destino: ");
+            int destino = consola.nextInt();
+            matriz[origen][destino] = 1;
+        }
+        String respuesta;
+        if (bicolor(matriz)) {
+            System.out.println(respuesta = "BICOLOR");
+        } else {
+            System.out.println(respuesta = "NO BICOLOR");
+        }
+
+    }
+}
