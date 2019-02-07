@@ -1,0 +1,65 @@
+import java.util.ArrayList;
+
+/**
+ *
+ * @author cl18417
+ */
+public class Reinas {
+
+    public static boolean noSeAtacan(int[] tablero, int col) {
+        for (int i = 0; i < col - 1; i++) {
+            for (int j = i + 1; j < col; j++) {
+                if (Math.abs(tablero[i] - tablero[j]) == Math.abs(i - j)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+
+    }
+
+    public static void imprimirTablero(int[] tablero) {
+
+        int n = tablero.length;
+        System.out.print("    ");
+        for (int i = 0; i < n; ++i) {
+            System.out.print(i + " ");
+        }
+        System.out.println("\n");
+        for (int i = 0; i < n; ++i) {
+            System.out.print(i + "   ");
+            for (int j = 0; j < n; ++j) {
+                System.out.print((tablero[i] == j ? "Q" : "#") + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    private static boolean nReinas(int n, int[] tablero, int columna) {
+        if (columna == n) {
+            imprimirTablero(tablero);
+            return true;
+        } else {
+
+            if (noSeAtacan(tablero, columna)) {
+                nReinas(n, tablero, columna + 1);
+            } else if (!(noSeAtacan(tablero, columna + 1))) {
+
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    private static void nReinas(int n) {
+        nReinas(n, new int[n], 0);
+
+    }
+
+    public static void main(String[] args) {
+        nReinas(8);
+    }
+
+}
