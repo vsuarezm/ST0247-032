@@ -16,9 +16,14 @@ public class Taller4 {
      * @param w vertice
      * @return true si hay camino, false de lo contrario
      */
-    public static boolean auxHayCaminoDFS(Digraph g, int v, int w) {
-        boolean[] visitados = new boolean[g.size()];
-        //return hayCaminoDFS(g, v, w, visitados);
+     public static int hamiltonWay(Digraph g, int o){
+        boolean[] visit = new boolean[g.size()];
+        int vertices = 0;
+        int[] costo = new int[1];
+        costo[0] = Integer.MAX_VALUE;
+        int tamaño = 0;
+        hamiltonWayAux(g, o, o, visit, costo, tamaño, vertices);
+        return costo[0] == Integer.MAX_VALUE ? 0 : costo[o];
     }
 
     /**
@@ -31,31 +36,39 @@ public class Taller4 {
      * no visitados
      * @return true si hay camino, false de lo contrario
      */
-    private static int hayCaminoDFS(Digraph g, int o, int d, boolean[] visitados) {
-        visitados[o] = true;
-        int costoMinimo = Integer.MAX_VALUE;
-        int costoCamino = 0;
-        if (o == d) {
-            return costoMinimo;
-        } else {
-            ArrayList <Integer> hijos = g.getSuccessors(o);
-            for (Integer hijo:hijos) {
-                if (!visitados[hijo]) {
-                    visitados[hijo] = true;
-                    int re =costoMinimo(g, hijo,d, visitados);
-                    if (re == Integer.MAX_VALUE){
-                        costoCamino = re;
-                    } else{
-                        costoCamino = g.getWeight(o, d) + re;
-                    }
-                    if (costoCamino < costoMinimo){
-                        costoMinimo = costoCamino;
-                    }
-                }
+    public static boolean hamiltonWayAux(Digraph g, int o, int d, boolean[] visit,
+                                  int[] costo, int tamaño, int vertices){
+        
+        System.out.println("tamaño: "+ tamaño);
+        System.out.println("costo: " + costo[0]);
+        System.out.println("vertices: " + vertices);
+        System.out.println("g: " + g.size());
+        
+        if(o == d && g.size() == vertices){
+            System.out.println("llegue");
+            if(tamaño < costo[0]){
+                costo[0] = tamaño;
+                System.out.println("llegue222");
             }
-            return costoMinimo;
+            visit[o] = false;
+            return true;
         }
-
+                
+        visit[o] = true;
+        vertices++;
+        
+        ArrayList<Integer> hijos=g.getSuccessors(o);
+        for (Integer hijo:hijos) {
+            if((!visit[hijo] && tamaño+g.getWeight(o,hijo)<costo[0])|| (hijo == d && vertices == g.size())){
+                tamaño += g.getWeight(o, hijo);
+                System.out.println("hijo:" + hijo);
+                System.out.println("padre: " + d);
+                hamiltonWayAux(g, hijo, d, visit, costo, tamaño, vertices);
+            }
+        }
+        visit[o] = false;
+        System.out.println("salí");
+        return false;
     }
 
     /**
@@ -91,31 +104,6 @@ public class Taller4 {
             }
             return costoMinimo;
         }
-
-    }
-
-    /**
-     * Metodo auxiliar que llama al metodo recorrido posterior con cada uno de
-     * los vertices
-     *
-     * @param g grafo dado
-     * @return cual es el costo que tiene
-     */
-    public static int recorrido(Digraph g) {
-
-    }
-
-    /**
-     * Metodo que recorre todo el grafo con la intencion de buscar un camino que
-     * represente el menor costo pasando por todos los vertices exactamente una
-     * vez y vuelva al nodo inicial
-     *
-     * @param g grafo dado
-     * @param v vertice inicial
-     * @param unvisited arreglo de nodos aun no visitados
-     * @return cual es el costo que tiene
-     */
-    private static int recorrido(Digraph g, int v, int[] unvisited) {
 
     }
 
