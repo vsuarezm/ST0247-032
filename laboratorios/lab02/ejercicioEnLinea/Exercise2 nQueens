@@ -1,0 +1,72 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ * Exercise2 (of the Queens with bad square)
+ *
+ * @author Santiago Moreno, Valeria Suárez
+ */
+public class Exercise2 {
+
+    static ArrayList nullies = badSquares();
+    static int row = 0;
+    static int col = 0;
+    static int sol = 0;
+
+    public static boolean notAttack(int[] board, int col) {
+        for (int i = 0; i < col; i++) {
+            if ((Math.abs(board[i] - board[col]) == Math.abs(i - col)) || (board[i] == board[col])) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    private static boolean nQueens(int n, int[] board, int column) {
+        System.out.println("NumSol: " + sol);
+        if (column == n) {
+            return true;
+        } else {
+            for (int i = 2; i < n; i++) {
+                board[column] = i;
+                for (int j = 0; j < nullies.size(); j++) {
+                    Pair pair = (Pair) nullies.get(j);
+                    row = (int) pair.first;
+                    col = (int) pair.second;
+                    if ((row != i) && (col != column)) {
+                        if (notAttack(board, column)) {
+                            nQueens(n, board, column + 1);
+                            sol++;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+    }
+
+    public static ArrayList badSquares() {
+        Scanner sc = new Scanner(System.in);
+        ArrayList nulls = new ArrayList();
+        System.out.println("How many bad squares do you want to create? ");
+        int squares = sc.nextInt();
+        for (int i = 0; i < squares; i++) {
+            System.out.print("Row (" + i + "): ");
+            int x = sc.nextInt();
+            System.out.print("Column (" + i + "): ");
+            int y = sc.nextInt();
+            System.out.println();
+            nulls.add(new Pair(x, y));
+        }
+        return nulls;
+    }
+
+    private static void nQueens(int n) {
+        nQueens(n, new int[n], 0);
+    }
+
+    public static void main(String[] args) {
+        nQueens(4);
+    }
+}
