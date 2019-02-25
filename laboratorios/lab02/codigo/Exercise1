@@ -1,0 +1,35 @@
+import java.util.ArrayList;
+
+/** Exercise1 (Minimum Cost of a directed graph)
+ *
+ * @author Santiago Moreno, Valeria Suárez
+ */
+public class Exercise1 {
+
+    private static int minimumCost(Digraph g, int o, int d, boolean[] visited) {
+        visited[o] = true;
+        int minimalCost = Integer.MAX_VALUE;
+        int roadCost = 0;
+        if (o == d) {
+            return minimalCost;
+        } else {
+            ArrayList <Integer> branches = g.getSuccessors(o);
+            for (Integer branch:branches) {
+                if (!visited[branch]) {
+                    visited[branch] = true;
+                    int re =minimumCost(g, branch,d, visited);
+                    if (re == Integer.MAX_VALUE){
+                        roadCost = re;
+                    } else{
+                        roadCost = g.getWeight(o, d) + re;
+                    }
+                    if (roadCost < minimalCost){
+                        minimalCost = roadCost;
+                    }
+                }
+            }
+            return minimalCost;
+        }
+
+    }
+}
