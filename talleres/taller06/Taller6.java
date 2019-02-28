@@ -56,7 +56,7 @@ public class Taller6 {
             }
             vertAct++;
         }
-        return costos[0];
+        return costos;
     }
 
 }
