@@ -40,8 +40,7 @@ public class Taller6 {
     public static int recorrido(Digraph g) {
         boolean[] visit = new boolean[g.size()];
         int vertAct = 0;
-        int[] costos = new int[1];
-        costos[0] = Integer.MAX_VALUE;
+        int costos = Integer.MAX_VALUE;
         int tamaño = 0;
 
         while (vertAct != g.size) {
@@ -50,8 +49,8 @@ public class Taller6 {
             for (Integer hijo : hijos) {
                 if ((!visit[hijo] && tamaño + g.getWeight(vertAct, hijo) < costos[0]) || (hijo == vertAct && vertAct == g.size())) {
                     tamaño += g.getWeight(vertAct, hijo);
-                    if (tamaño < costos[0]) {
-                        costos[0] = tamaño;
+                    if (tamaño < costos) {
+                        costos = tamaño;
                     }
                 }
             }
