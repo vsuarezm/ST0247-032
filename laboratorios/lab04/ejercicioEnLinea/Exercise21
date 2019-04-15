@@ -1,0 +1,46 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+/**
+ *
+ * @author Santiago Moreno, Valeria Suárez
+ */
+
+public class Exercise21 {
+
+    private static void exercise21(){
+
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        while (n!=0){
+            int d = sc.nextInt();
+            int r = sc.nextInt();
+            int [] morning = new int[n];
+            int [] afternoon = new int[n];
+            int hours = 0, pay=0;
+
+            for (int i = 0; i < n; i++){
+                morning[i]= sc.nextInt();
+            }
+            for (int i = 0; i < n; i++){
+                afternoon[i]= sc.nextInt();
+            }
+            
+            Arrays.sort(morning);
+            Arrays.sort(afternoon);
+
+            for (int i = 0; i < n; i++)
+                hours += (morning[i] + afternoon[n-i-1]) - d;
+
+            pay = hours * r;
+            System.out.println(pay);
+            n = sc.nextInt();
+
+        }
+
+    }
+    
+    public static void main(String [] args){
+        exercise21();
+    }
+}
