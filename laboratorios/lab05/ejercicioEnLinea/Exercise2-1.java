@@ -11,7 +11,6 @@ public class Exercise21 {
 
     public static void path (Digraph graf) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
         Pair<Integer, Integer>[] co;
 
         int x = sc.nextInt();
