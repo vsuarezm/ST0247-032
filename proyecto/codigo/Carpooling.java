@@ -14,6 +14,7 @@ import java.util.LinkedList;
 public class Carpooling {
 
     public static ArrayList<Integer> nodosDirectos = new ArrayList<Integer>();
+    public static int numeroTotalCarros;
 
     /**
      * Metodo para leer un archivo con los duenos de vehiculos y la empresa
@@ -27,7 +28,7 @@ public class Carpooling {
      */
     public static DigraphAM leerArchivo(int numeroDePuntos, float p) {
 
-        final String nombreDelArchivo = "C:\\Users\\xvale\\OneDrive\\Desktop\\dataset-ejemplo-U=205-p=1.3.txt";
+        final String nombreDelArchivo = "D:\\DATA\\Desktop\\dataset-ejemplo-U=205-p=1.3.txt";
         DigraphAM grafo = new DigraphAM(numeroDePuntos);
 
         try {
@@ -56,7 +57,6 @@ public class Carpooling {
                 lineaActual = br.readLine();
 
             }
-            
 
         } catch (IOException ioe) {
             System.out.println("Error leyendo el archivo de entrada: " + ioe.getMessage());
@@ -64,61 +64,60 @@ public class Carpooling {
         return grafo;
     }
 
-
     public static ArrayList<Integer> Ordenar(DigraphAM grafo, ArrayList<Integer> nodosDirectos, int inicial) {
         ArrayList<Integer> copia = new ArrayList<>(nodosDirectos);
-        
-        for (int i = 0; i < copia.size()-1; i++) {
+
+        for (int i = 0; i < copia.size() - 1; i++) {
             for (int j = i + 1; j < copia.size(); j++) {
-                if (grafo.getWeight((inicial), copia.get(i)-1) > grafo.getWeight((inicial), copia.get(j)-1)) {
+                if (grafo.getWeight((inicial), copia.get(i) - 1) > grafo.getWeight((inicial), copia.get(j) - 1)) {
                     int aux = copia.get(i);
                     copia.set(i, copia.get(j));
                     copia.set(j, aux);
                 }
             }
         }
-        
-        for (int i = 0; i < copia.size(); i++) {
-            System.out.println(i + ". " + copia.get(i)+" peso= "+grafo.getWeight((inicial), copia.get(i)-1));
-        }
         return copia;
     }
 
     public static ArrayList<ArrayList<Integer>> asignarVehiculos(DigraphAM grafo, float p) {
-       ArrayList<ArrayList<Integer>> carros = new ArrayList<>();
-       int duracion;
+        ArrayList<ArrayList<Integer>> carros = new ArrayList<>();
+        int duracion;
         while (nodosDirectos.size() != 0) {
-            int conductor = nodosDirectos.get(nodosDirectos.size()-1);
+            int conductor = nodosDirectos.get(nodosDirectos.size() - 1);
             ArrayList<Integer> carro = new ArrayList<>();
-            duracion = (int)(p * grafo.getWeight(conductor, 1));
+            duracion = (int) (p * grafo.getWeight(conductor - 1, 0));
             ArrayList<Integer> cercanos = Ordenar(grafo, nodosDirectos, conductor);
             for (Integer cercano : cercanos) {
-                if (carro.size() >= 5) break;
+                if (carro.size() >= 5) {
+                    break;
+                }
                 if (validar(grafo, duracion, carro, cercano)) {
                     carro.add(cercano);
                     int indice = nodosDirectos.indexOf(cercano);
                     nodosDirectos.remove(indice);
                 }
-                
+
             }
             carros.add(carro);
-            
+
         }
+        numeroTotalCarros = carros.size();
         return carros;
     }
-    
+
     public static boolean validar(DigraphAM grafo, int duracion, ArrayList<Integer> carro, int cercano) {
-        if (carro.isEmpty()) return true;
-        
-        int peso=0, ultimo=carro.get(0);
+        if (carro.isEmpty()) {
+            return true;
+        }
+
+        int peso = 0, ultimo = carro.get(0);
         for (Integer persona : carro) {
-            peso += grafo.getWeight(ultimo-1, persona-1);
+            peso += grafo.getWeight(ultimo - 1, persona - 1);
             ultimo = persona;
         }
-        peso += grafo.getWeight(ultimo-1, cercano-1) + grafo.getWeight(cercano-1, 0);
+        peso += grafo.getWeight(ultimo - 1, cercano - 1) + grafo.getWeight(cercano - 1, 0);
         return duracion >= peso;
     }
-    
 
     /**
      * Metodo para escribir un archivo con la respuesta Complejidad: Mejor y
@@ -137,6 +136,7 @@ public class Carpooling {
                 }
                 escritor.println();
             }
+            escritor.print("Numero total de carros: " + numeroTotalCarros);
             escritor.close();
         } catch (IOException ioe) {
             System.out.println("Error escribiendo el archivo de salida " + ioe.getMessage());
@@ -149,7 +149,7 @@ public class Carpooling {
         final float p = args.length < 2 ? 1.3f : Float.parseFloat(args[1]);
         // Leer el archivo con las distancias entre los duenos de los vehiculos y la empresa
         DigraphAM grafo = leerArchivo(numeroDePuntos, p);
-        
+
         Carpooling.nodosDirectos = Ordenar(grafo, nodosDirectos, 0);
         // Asignar los vehiculos compartidos
         long startTime = System.currentTimeMillis();
